@@ -1,6 +1,6 @@
 #!/bin/bash
-
-ANSIBLE_OUT=$(ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i hosts provisionar.yml -u ubuntu --private-key ~/.ssh/Ubuntu-dev-bira.pem)
+cd 05-mysql-java-ansible-itau
+ANSIBLE_OUT=$(ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i hosts provisionar.yml -u ubuntu --private-key /var/lib/jenkins/treinamentoitau_mauricio2.pem)
 echo $ANSIBLE_OUT
 
 ## Mac ##
@@ -14,12 +14,11 @@ sleep 300
 cat <<EOF > restore-dump-mysql.yml
 - hosts: all
   become: yes
-  tasks:
-    - name: "Create dabatase"
-      shell: echo "create database SpringWebYoutubeTest;"| kubectl exec -it $MYSQL_POD_NAME --tty -- mysql -uroot -ppassword_mysql 
-    
+  tasks:    
     - name: "Restore dump"
-      shell: cat /root/k8s-deploy/1.2-dump-mysql.sql  | kubectl exec -it $MYSQL_POD_NAME --tty -- mysql -uroot -ppassword_mysql SpringWebYoutubeTest
+      shell: cat /root/k8s-deploy/1.2-dump-mysql.sql  | kubectl exec -it $MYSQL_POD_NAME --tty -- mysql -uroot -proot SpringWebYoutube
 EOF
+    # - name: "Create dabatase"
+    #   shell: echo "create database SpringWebYoutube;"| kubectl exec -it $MYSQL_POD_NAME --tty -- mysql -uroot -ppassword_mysql 
 
-ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i hosts restore-dump-mysql.yml -u ubuntu --private-key ~/.ssh/Ubuntu-dev-bira.pem
+ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i hosts restore-dump-mysql.yml -u ubuntu --private-key /var/lib/jenkins/treinamentoitau_mauricio2.pem

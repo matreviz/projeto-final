@@ -7,7 +7,7 @@ spec:
   - port: 3306
   selector:
     app: mysql
-  clusterIP: None # Selecione o nome meno do serviço, ex http://mysql:3306
+  clusterIP: http://10.50.10.59:3306 # Selecione o nome meno do serviço, ex http://mysql:3306
 ---
 apiVersion: apps/v1
 kind: Deployment

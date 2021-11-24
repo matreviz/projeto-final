@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
         - name: container-pod-javadb
-          image: didox/crud-java-login:v0.0.1
+          image: projetofinal/spring-web-youtube:v0.0.1
           env:
             - name: USER
               valueFrom:
